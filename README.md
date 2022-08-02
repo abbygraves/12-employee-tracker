@@ -13,7 +13,8 @@ A content management system (CMS) command-line application used to manage a comp
 
 ## **Built With:**
   + JavaScript
-  + Node.js 
+  + Node.js
+  + Express.js
   + inquirer.js
   + MySQL 2
 
@@ -41,7 +42,7 @@ A content management system (CMS) command-line application used to manage a comp
 <br/>
 
 ## **Got Questions?**
-  Feel free to reach out with questions or comments regarding Team Profile Generator!
+  Feel free to reach out with questions or comments regarding Employee Tracker!
   
   [My GitHub Profile](https://github.com/abbygraves)&nbsp; :octocat: &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp; abbygraves14@gmail.com&nbsp; :incoming_envelope:
 
