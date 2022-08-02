@@ -64,11 +64,21 @@ const displayMenu = () => {
       case 'Update an Employee Role':
         updateEmployee();
         break;
-      case 'Exit Application':
-        default:
-        process.exit();
+      // case 'Exit Application':
+      //   default:
+      //   process.exit();
     }
-  })
-}
+  });
+};
+
+const viewDepartments = () => {
+  const sql = `SELECT * FROM departments`;
+  db.query(sql, (err, results) => {
+    console.table(results);
+    displayMenu();
+  });
+};
+
+
 
 displayMenu();
