@@ -5,9 +5,8 @@ const router = express.Router();
 
 
 router.use(require('./departmentRoutes'));
-// router.use(require('./partyRoutes'));
-// router.use(require('./voterRoutes'));
-// router.use(require('./voteRoutes'));
+router.use(require('./employeeRoutes'));
+// router.use(require('./roleRoutes'));
 
 
 module.exports = router;
