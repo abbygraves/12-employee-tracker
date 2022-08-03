@@ -1,9 +1,10 @@
 //  WORK IN PROGRESS
 
 const inquirer = require('inquirer');
-const cTable = require('console.table');
 const db = require('./db/connection');
+const cTable = require('console.table');
 const mysql = require('mysql2');
+const { promise } = require("./db/connection");
 
 
 // MAIN MENU
@@ -72,9 +73,8 @@ const displayMenu = () => {
 };
 
 const viewDepartments = () => {
-  const sql = `SELECT * FROM departments`;
-  db.query(sql, (err, results) => {
-    console.table(results);
+  db.query(`SELECT * FROM departments`, (err, rows) => {
+    console.table(rows);
     displayMenu();
   });
 };
