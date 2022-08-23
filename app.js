@@ -9,26 +9,11 @@ const { promise } = require("./db/connection");
 
 // MAIN MENU
 const displayMenu = () => {
-  console.log(`
-  ███████╗███╗   ███╗██████╗ ██╗      ██████╗ ██╗   ██╗███████╗███████╗
-  ██╔════╝████╗ ████║██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝██╔════╝██╔════╝
-  █████╗  ██╔████╔██║██████╔╝██║     ██║   ██║ ╚████╔╝ █████╗  █████╗  
-  ██╔══╝  ██║╚██╔╝██║██╔═══╝ ██║     ██║   ██║  ╚██╔╝  ██╔══╝  ██╔══╝  
-  ███████╗██║ ╚═╝ ██║██║     ███████╗╚██████╔╝   ██║   ███████╗███████╗
-  ╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   ╚══════╝╚══════╝
-                                                                      
-       ████████╗██████╗  █████╗  ██████╗██╗  ██╗███████╗██████╗         
-       ╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝██╔══██╗        
-          ██║   ██████╔╝███████║██║     █████╔╝ █████╗  ██████╔╝        
-          ██║   ██╔══██╗██╔══██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗        
-          ██║   ██║  ██║██║  ██║╚██████╗██║  ██╗███████╗██║  ██║        
-          ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝                                      
-  `)
   return inquirer.prompt([
     {
       type: 'list',
       name: 'mainMenu',
-      message: 'Welcome to Employee Tracker. What would you like to do?',
+      message: 'What would you like to do?',
       choices: [
         'View All Departments',
         'View All Roles',
@@ -43,7 +28,7 @@ const displayMenu = () => {
       ]
     }
   ]).then(menuResponse => {
-    switch (menuResponse.menu) {
+    switch (menuResponse.mainMenu) {
       case 'View All Departments':
         viewDepartments();
         break;
@@ -65,15 +50,63 @@ const displayMenu = () => {
       case 'Update an Employee Role':
         updateEmployee();
         break;
-      // case 'Exit Application':
-      //   default:
-      //   process.exit();
+      case 'Exit Application':
+        console.log('Goodbye!')
+      default:
+        process.exit();
+      // default:
+      // console.log("heyyyyyy", menuResponse)
     }
   });
 };
 
 const viewDepartments = () => {
   db.query(`SELECT * FROM departments`, (err, rows) => {
+    console.table(rows);
+    displayMenu();
+  });
+};
+
+const viewRoles = () => {
+  db.query(
+    `SELECT roles.id, roles.title, departments.name AS department, roles.salary
+      FROM roles 
+      LEFT JOIN departments
+      ON roles.department_id=departments.id`,
+    (err, rows) => {
+      console.table(rows);
+      displayMenu();
+    }
+  );
+};
+
+const viewEmployees = () => {
+  db.query(
+    `SELECT 
+      e.id, 
+      e.first_name, 
+      e.last_name, 
+      r.title AS role,
+      r.salary AS salary,
+      d.name AS department,
+      CONCAT (m.first_name, " " ,m.last_name) AS manager
+      FROM employees e
+      LEFT JOIN roles r
+      ON e.role_id = r.id
+      LEFT JOIN departments d
+      ON r.department_id = d.id
+      LEFT JOIN employees m
+      ON e.manager_id = m.id`,
+    (err, results) => {
+      console.table(results);
+      displayMenu();
+    }
+  );
+};
+
+const addDepartment = () => {
+  inquirer
+  db.query(`INSERT INTO departments`, (err, rows) => {
     console.table(rows);
     displayMenu();
   });
