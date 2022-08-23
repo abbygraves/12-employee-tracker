@@ -105,12 +105,96 @@ const viewEmployees = () => {
 };
 
 const addDepartment = () => {
-  inquirer
-  db.query(`INSERT INTO departments`, (err, rows) => {
-    console.table(rows);
-    displayMenu();
-  });
+  inquirer.prompt(
+    [{
+      type: 'input',
+      name: 'name',
+      message: 'What is the name of the department?',
+      validate: (name) => {
+        if (name) {
+          return true;
+        } else {
+          console.log("You must enter a name for the department!");
+          return false;
+        }
+      }
+    }]
+  )
+    .then((newDepartment) => {
+      db.query(
+        `INSERT INTO departments (name) VALUES (?)`,
+        newDepartment.name,
+        (err, rows) => {
+          console.log('Success! The department has been added to database!');
+          displayMenu();
+        }
+      );
+    })
 };
+
+
+const addRole = () => {
+  inquirer.prompt(
+    [
+      {
+        type: 'input',
+        name: 'title',
+        message: 'What is the name of the role?',
+        validate: (title) => {
+          if (title) {
+            return true;
+          } else {
+            console.log("You must enter a name for the role!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary for the role?',
+        validate: (salary) => {
+          if (salary) {
+            return true;
+          } else {
+            console.log("You must enter a salary for the role!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'department',
+        message: "Enter the ID of the department the role belongs to.",
+        validate: (department) => {
+          if (department) {
+            return true;
+          } else {
+            console.log("You must enter a department ID for the role!");
+            return false;
+          }
+        }
+      },
+    ]
+  )
+    .then((newRole) => {
+      db.query(
+        `INSERT INTO roles SET ?`,
+        {
+          title: newRole.title,
+          salary: newRole.salary,
+          department_id: newRole.department,
+        },
+        (err, rows) => {
+          console.log('Success! The role has been added to database.');
+          displayMenu();
+        }
+      );
+    })
+};
+
+
+
 
 
 
