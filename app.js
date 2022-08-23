@@ -195,6 +195,81 @@ const addRole = () => {
 
 
 
+const addEmployee = () => {
+  inquirer.prompt(
+    [
+      {
+        type: 'input',
+        name: 'firstName',
+        message: "What is the employee's first name?",
+        validate: (firstName) => {
+          if (firstName) {
+            return true;
+          } else {
+            console.log("You must enter a first name for the employee!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "What is the employee's last name?",
+        validate: (lastName) => {
+          if (lastName) {
+            return true;
+          } else {
+            console.log("You must enter a last name for the employee!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'role',
+        message: "Enter the ID of the employee's role",
+        validate: (role) => {
+          if (role) {
+            return true;
+          } else {
+            console.log("You must enter a role ID for the employee!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'manager',
+        message: "Enter the ID of the employee's manager. If this does not apply please press enter.",
+        validate: (manager) => {
+          if (manager) {
+            return true;
+          } else {
+            console.log("You must enter a manager ID for the employee!");
+            return false;
+          }
+        }
+      },
+    ]
+  )
+    .then((newEmployee) => {
+      db.query(
+        `INSERT INTO employees SET ?`,
+        {
+          first_name: newEmployee.firstName,
+          last_name: newEmployee.lastName,
+          role_id: newEmployee.role,
+          manager_id: newEmployee.manager
+        },
+        (err, rows) => {
+          console.log('Success! The employee has been added to database.');
+          displayMenu();
+        }
+      );
+    })
+};
+
+
 
 
 
