@@ -1,6 +1,6 @@
 # Employee Tracker
 
-![License: MIT](https://img.shields.io/badge/License-MIT-6102EE.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-1102A7.svg)
 
 ## **Description**
 A content management system (CMS) command-line application used to manage a company's employee database.
