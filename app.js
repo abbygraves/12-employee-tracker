@@ -271,6 +271,58 @@ const addEmployee = () => {
 
 
 
+const updateEmployee = () => {
+  inquirer.prompt(
+    [
+      {
+        type: 'input',
+        name: 'employee',
+        message: "Enter the ID of the employee you would like to update.",
+        validate: (employee) => {
+          if (employee) {
+            return true;
+          } else {
+            console.log("You must enter an employee ID!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'role',
+        message: "Enter the ID of the employee's new role.",
+        validate: (role) => {
+          if (role) {
+            return true;
+          } else {
+            console.log("You must enter the new role ID for the employee!");
+            return false;
+          }
+        }
+      },
+    ]
+  )
+  .then((updatedEmployeeInfo) => {
+    db.query(
+      `UPDATE employees SET ? WHERE ?`,
+      [{
+        role_id: updatedEmployeeInfo.role
+      },
+      {
+        id: updatedEmployeeInfo.employee
+      }],
+      (err, rows) => {
+        if(err) {
+          throw err;
+        }
+        console.log('Success! The employee has been added to database.');
+        displayMenu();
+      }
+    );
+  })
+};
+
+
 
 
 displayMenu();
