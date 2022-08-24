@@ -23,6 +23,7 @@ const displayMenu = () => {
         'Add an Employee',
         'Update an Employee Role',
         'Delete a Department',
+        'Delete a Role',
         new inquirer.Separator(),
         'Exit Application',
         new inquirer.Separator(),
@@ -53,6 +54,9 @@ const displayMenu = () => {
         break;
       case 'Delete a Department':
         deleteDepartment();
+        break;
+      case 'Delete a Role':
+        deleteRole();
         break;
       case 'Exit Application':
         console.log('Goodbye!')
@@ -419,6 +423,51 @@ const deleteDepartment = () => {
             throw err;
           }
           console.log("Success! The department has been deleted.");
+          displayMenu();
+        }
+      );
+    })
+  })
+};
+
+// ==============================================================================
+// COMPLETE
+const deleteRole = () => {
+  db.query("SELECT * FROM roles", function (err, rows) {
+    if (err) {
+      throw err;
+    }
+    inquirer.prompt(
+      {
+        type: "list",
+        name: "role",
+        message: "Select the role that you would like to delete.",
+        choices: function () {
+          const roleChoices = [];
+          for (let i = 0; i < rows.length; i++) {
+            roleChoices.push(rows[i].title);
+          }
+          return roleChoices;
+        }
+      }
+    )
+     .then((deletedRole) => {
+      let roleDeletion;
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].title == deletedRole.role) {
+          roleDeletion = rows[i].id;
+        }
+      }
+      db.query(
+        `DELETE FROM roles WHERE ?`,
+        {
+          id: roleDeletion
+        },
+        (err, rows) => {
+          if (err) {
+            throw err;
+          }
+          console.log("Success! The role has been deleted.");
           displayMenu();
         }
       );
