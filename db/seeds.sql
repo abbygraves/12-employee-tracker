@@ -16,8 +16,6 @@ VALUES
   ('Software Engineer', 100000, 3),
   ('Account Manager', 125000, 4),
   ('Accountant', 100000, 4);
-  -- ('Recruiter', 50000, 5),
-  -- ('Intern', 20000, 1);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES 
@@ -29,8 +27,3 @@ VALUES
   ('Fred', 'Steele', 6, 4),
   ('Mike', 'Wolfe', 7, NULL),
   ('Ellen', 'Price', 8, 7);
-  -- ('Phil', 'Myers', 9, NULL),
-  -- ('Kelly', 'Grant', 10, 1);
-
-
---  FILE COMPLETE

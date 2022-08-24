@@ -1,5 +1,3 @@
-//  WORK IN PROGRESS
-
 const inquirer = require('inquirer');
 const db = require('./db/connection');
 const cTable = require('console.table');
@@ -62,15 +60,12 @@ const displayMenu = () => {
         console.log('Goodbye!')
       default:
         process.exit();
-      // default:
-      // console.log("!!!!!!", menuResponse)
     }
   });
 };
 
 
 // MENU FUNCTIONALITY
-// COMPLETE
 const viewDepartments = () => {
   db.query(`SELECT departments.id, departments.dept_name AS name FROM departments`,
     (err, rows) => {
@@ -83,8 +78,8 @@ const viewDepartments = () => {
   );
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const viewRoles = () => {
   db.query(
     `SELECT roles.id, roles.title, departments.dept_name AS department, roles.salary
@@ -101,8 +96,8 @@ const viewRoles = () => {
   );
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const viewEmployees = () => {
   db.query(
     `SELECT 
@@ -130,8 +125,8 @@ const viewEmployees = () => {
   );
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const addDepartment = () => {
   inquirer.prompt(
     [{
@@ -163,8 +158,8 @@ const addDepartment = () => {
     })
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const addRole = () => {
   db.query("SELECT * FROM departments", function (err, rows) {
     if (err) {
@@ -239,8 +234,8 @@ const addRole = () => {
   });
 }
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const addEmployee = () => {
   db.query("SELECT * FROM roles", function (err, rows) {
     if (err) {
@@ -321,8 +316,8 @@ const addEmployee = () => {
   });
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const updateEmployee = () => {
   db.query("SELECT * FROM roles", function (err, rows) {
     if (err) {
@@ -385,8 +380,8 @@ const updateEmployee = () => {
   });
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const deleteDepartment = () => {
   db.query("SELECT * FROM departments", function (err, rows) {
     if (err) {
@@ -430,8 +425,8 @@ const deleteDepartment = () => {
   })
 };
 
-// ==============================================================================
-// COMPLETE
+// —————————————————————————————————————————————————————————————————————————————
+
 const deleteRole = () => {
   db.query("SELECT * FROM roles", function (err, rows) {
     if (err) {
@@ -474,9 +469,6 @@ const deleteRole = () => {
     })
   })
 };
-
-
-
 
 
 
