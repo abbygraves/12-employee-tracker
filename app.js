@@ -64,7 +64,7 @@ const displayMenu = () => {
 // MENU FUNCTIONALITY
 // COMPLETE
 const viewDepartments = () => {
-  db.query(`SELECT * FROM departments`,
+  db.query(`SELECT departments.id, departments.dept_name AS name FROM departments`,
     (err, rows) => {
       if (err) {
         throw err;
@@ -311,15 +311,7 @@ const addEmployee = () => {
         {
           type: 'input',
           name: 'manager',
-          message: "Enter the ID of the employee's manager.",
-          // validate: (manager) => {
-          //   if (manager) {
-          //     return true;
-          //   } else {
-          //     console.log("You must enter a manager ID for the employee!");
-          //     return false;
-          //   }
-          // }
+          message: "Enter the ID of the employee's manager."
         }
       ]
     )
@@ -353,6 +345,10 @@ const addEmployee = () => {
   // ==============================================================================
   // FIX: MAKE ROLES APPEAR AS A LIST OF CHOICES 
   const updateEmployee = () => {
+    db.query("SELECT * FROM roles", function (err, rows) {
+      if (err) {
+        throw err;
+      }
     inquirer.prompt(
       [
         {
@@ -368,26 +364,45 @@ const addEmployee = () => {
             }
           }
         },
+        // {
+        //   type: 'input',
+        //   name: 'role',
+        //   message: "Enter the ID of the employee's new role.",
+        //   validate: (role) => {
+        //     if (role) {
+        //       return true;
+        //     } else {
+        //       console.log("You must enter the new role ID for the employee!");
+        //       return false;
+        //     }
+        //   }
+        // },
         {
-          type: 'input',
-          name: 'role',
-          message: "Enter the ID of the employee's new role.",
-          validate: (role) => {
-            if (role) {
-              return true;
-            } else {
-              console.log("You must enter the new role ID for the employee!");
-              return false;
+          // USER CAN SELECT A ROLE FROM A LIST
+          type: "list",
+          name: "role",
+          message: "What is the employee's new role?",
+          choices: function () {
+            const roleChoices = [];
+            for (let i = 0; i < rows.length; i++) {
+              roleChoices.push(rows[i].title);
             }
+            return roleChoices;
           }
-        },
+        }
       ]
     )
       .then((updatedEmployeeInfo) => {
+        let roleSelection;
+        for (let i = 0; i < rows.length; i++) {
+          if (rows[i].title == updatedEmployeeInfo.role) {
+            roleSelection = rows[i].id;
+          }
+        }
         db.query(
           `UPDATE employees SET ? WHERE ?`,
           [{
-            role_id: updatedEmployeeInfo.role
+            role_id: roleSelection
           },
           {
             id: updatedEmployeeInfo.employee
@@ -396,13 +411,13 @@ const addEmployee = () => {
             if (err) {
               throw err;
             }
-            console.log('Success! The employee has been added to database.');
+            console.log("Success! The employee's role has been updated.");
             displayMenu();
           }
         );
       })
-  };
+  });
+};
 
 
-
-  displayMenu();
+displayMenu();
