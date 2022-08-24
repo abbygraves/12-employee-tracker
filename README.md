@@ -20,14 +20,17 @@ A content management system (CMS) command-line application used to manage a comp
 
 <br/>
 
-  ## **Installation** 
-  1. Clone the repository to your local system
-  2. Ensure you have Node.js installed on your local system before running application
-  3. Run the following command in the command-line
-  ```md
-  npm i
-  ```
+## **Installation** 
+1. Clone the repository to your local system
+2. Ensure you have Node.js installed on your local system before running application
+3. Run the following command in the command-line
+```md
+npm i
+```
+<br/>
 
+## **Usage**
+Type `node app.js` in the command line to invoke the application
 
 <br/>
 
