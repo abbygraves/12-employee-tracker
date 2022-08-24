@@ -9,7 +9,7 @@ A content management system (CMS) command-line application used to manage a comp
 
 
 <p align="center">
-  <img src="./assets/employee-tracker-img.png" width="500px"/>
+  <img src="./assets/employee-tracker-img.png" width="700px"/>
 </p>
 
 
