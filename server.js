@@ -1,3 +1,5 @@
+// FILE COMPLETE
+
 const express = require('express');
 const db = require('./db/connection');
 const apiRoutes = require('./routes');
@@ -26,5 +28,3 @@ db.connect((err) => {
     console.log(`Server running on port: http://localhost:${PORT}`);
   });
 });
-
-// FILE COMPLETE
