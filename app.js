@@ -22,6 +22,7 @@ const displayMenu = () => {
         'Add a Role',
         'Add an Employee',
         'Update an Employee Role',
+        'Delete a Department',
         new inquirer.Separator(),
         'Exit Application',
         new inquirer.Separator(),
@@ -49,6 +50,9 @@ const displayMenu = () => {
         break;
       case 'Update an Employee Role':
         updateEmployee();
+        break;
+      case 'Delete a Department':
+        deleteDepartment();
         break;
       case 'Exit Application':
         console.log('Goodbye!')
@@ -190,27 +194,12 @@ const addRole = () => {
             }
           }
         },
-        // USER MUST INPUT DEPARTMENT ID
-        // {
-        //   type: 'input',
-        //   name: 'department',
-        //   message: "Enter the ID of the department the role belongs to.",
-        //   validate: (department) => {
-        //     if (department) {
-        //       return true;
-        //     } else {
-        //       console.log("You must enter a department ID for the role!");
-        //       return false;
-        //     }
-        //   }
-        // },
         {
           // USER CAN SELECT A DEPEARTMEMT FROM A LIST
           type: "list",
           name: "department",
           message: "Which department does the role belong to?",
           choices: function () {
-            // loop through department table to generate list of department names as choices
             const departmentChoices = [];
             for (let i = 0; i < rows.length; i++) {
               departmentChoices.push(rows[i].dept_name);
@@ -281,20 +270,6 @@ const addEmployee = () => {
             }
           }
         },
-        // USER MUST INPUT ROLE ID
-        // {
-        //   type: 'input',
-        //   name: 'role',
-        //   message: "Enter the ID of the employee's role",
-        //   validate: (role) => {
-        //     if (role) {
-        //       return true;
-        //     } else {
-        //       console.log("You must enter a role ID for the employee!");
-        //       return false;
-        //     }
-        //   }
-        // },
         {
           // USER CAN SELECT A ROLE FROM A LIST
           type: "list",
@@ -342,13 +317,13 @@ const addEmployee = () => {
   });
 };
 
-  // ==============================================================================
-  // FIX: MAKE ROLES APPEAR AS A LIST OF CHOICES 
-  const updateEmployee = () => {
-    db.query("SELECT * FROM roles", function (err, rows) {
-      if (err) {
-        throw err;
-      }
+// ==============================================================================
+// COMPLETE
+const updateEmployee = () => {
+  db.query("SELECT * FROM roles", function (err, rows) {
+    if (err) {
+      throw err;
+    }
     inquirer.prompt(
       [
         {
@@ -364,19 +339,6 @@ const addEmployee = () => {
             }
           }
         },
-        // {
-        //   type: 'input',
-        //   name: 'role',
-        //   message: "Enter the ID of the employee's new role.",
-        //   validate: (role) => {
-        //     if (role) {
-        //       return true;
-        //     } else {
-        //       console.log("You must enter the new role ID for the employee!");
-        //       return false;
-        //     }
-        //   }
-        // },
         {
           // USER CAN SELECT A ROLE FROM A LIST
           type: "list",
@@ -418,6 +380,55 @@ const addEmployee = () => {
       })
   });
 };
+
+// ==============================================================================
+// COMPLETE
+const deleteDepartment = () => {
+  db.query("SELECT * FROM departments", function (err, rows) {
+    if (err) {
+      throw err;
+    }
+    inquirer.prompt(
+      {
+        type: "list",
+        name: "department",
+        message: "Select the department that you would like to delete.",
+        choices: function () {
+          const departmentChoices = [];
+          for (let i = 0; i < rows.length; i++) {
+            departmentChoices.push(rows[i].dept_name);
+          }
+          return departmentChoices;
+        }
+      }
+    )
+     .then((deletedDept) => {
+      let departmentDeletion;
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].dept_name == deletedDept.department) {
+          departmentDeletion = rows[i].id;
+        }
+      }
+      db.query(
+        `DELETE FROM departments WHERE ?`,
+        {
+          id: departmentDeletion
+        },
+        (err, rows) => {
+          if (err) {
+            throw err;
+          }
+          console.log("Success! The department has been deleted.");
+          displayMenu();
+        }
+      );
+    })
+  })
+};
+
+
+
+
 
 
 displayMenu();
