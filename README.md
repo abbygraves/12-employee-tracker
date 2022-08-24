@@ -7,11 +7,7 @@ A content management system (CMS) command-line application used to manage a comp
 
 ### [Click to View Demo]()
 
-
-<p align="center">
-  <img src="./assets/employee-tracker-img.png" width="700px"/>
-</p>
-
+<img src="./assets/employee-tracker-img.png" width="700px"/>
 
 <br/>
 
