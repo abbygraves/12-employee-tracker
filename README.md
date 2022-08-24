@@ -5,7 +5,7 @@
 ## **Description**
 A content management system (CMS) command-line application used to manage a company's employee database.
 
-### [Click to View Demo]()
+### [Click to View Demo](https://youtu.be/BYFxJ8VyShc)
 
 <img src="./assets/employee-tracker-img.png" width="750px"/>
 
